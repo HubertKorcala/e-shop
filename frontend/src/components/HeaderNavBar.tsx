@@ -1,4 +1,5 @@
 import profilePicture from "../assets/images/profile-avatar.png";
+import ThemeToggle from "./ThemeToggle";
 
 const HeaderNavBar = () => {
   return (
@@ -42,7 +43,7 @@ const HeaderNavBar = () => {
         </div>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full scale-150 fill-white">
+            <div className="w-10 rounded-full scale-125 fill-white">
               <img src={profilePicture} />
             </div>
           </label>
@@ -64,6 +65,7 @@ const HeaderNavBar = () => {
             </li>
           </ul>
         </div>
+        <ThemeToggle />
       </div>
     </header>
   );
