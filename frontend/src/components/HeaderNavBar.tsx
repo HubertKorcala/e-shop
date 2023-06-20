@@ -3,7 +3,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const HeaderNavBar = () => {
   return (
-    <header className="navbar bg-base-100">
+    <header className="navbar bg-base-100 drop-shadow-lg rounded-box">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">E-shop</a>
       </div>
