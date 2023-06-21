@@ -1,11 +1,14 @@
+import { Link } from "react-router-dom";
 import profilePicture from "../assets/images/profile-avatar.png";
 import ThemeToggle from "./ThemeToggle";
 
 const HeaderNavBar = () => {
   return (
-    <header className="navbar bg-base-100 drop-shadow-lg rounded-box">
+    <header className="navbar bg-base-100 drop-shadow-lg rounded-box z-10">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">E-shop</a>
+        <Link to={`/`} className="btn btn-ghost normal-case text-xl">
+          E-shop
+        </Link>
       </div>
       <div className="flex-none">
         <div className="dropdown dropdown-end">
@@ -36,7 +39,11 @@ const HeaderNavBar = () => {
               <span className="font-bold text-lg">8 Items</span>
               <span className="text-info">Subtotal: $999</span>
               <div className="card-actions">
-                <button className="btn btn-primary btn-block">View cart</button>
+                <Link to={`/cart`}>
+                  <button className="btn btn-primary btn-block">
+                    View cart
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -61,7 +68,7 @@ const HeaderNavBar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <Link to={`/login`}>Logout</Link>
             </li>
           </ul>
         </div>
