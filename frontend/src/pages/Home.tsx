@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react";
 import Product from "../components/Product";
-import products from "../products";
+import { ProductItem } from "../utils/productType";
+import axios from "axios";
 
 const Home = () => {
+  const [products, setProducts] = useState<Array<ProductItem>>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data } = await axios.get("/api/products");
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <div className="prose my-6 mx-auto">
