@@ -1,30 +1,42 @@
-import { useEffect, useState } from "react";
 import Product from "../components/Product";
+import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { ProductItem } from "../utils/productType";
-import axios from "axios";
 
 const Home = () => {
-  const [products, setProducts] = useState<Array<ProductItem>>([]);
+  const { data: products, isLoading, error } = useGetProductsQuery({});
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
-      setProducts(data);
-    };
+  if (error) {
+    if ("status" in error) {
+      const errMsg =
+        "error" in error ? error.error : JSON.stringify(error.data);
 
-    fetchProducts();
-  }, []);
+      return (
+        <div>
+          <div>An error has occurred:</div>
+          <div>{errMsg}</div>
+        </div>
+      );
+    } else {
+      return <div>{error.message}</div>;
+    }
+  }
 
   return (
     <>
-      <div className="prose my-6 mx-auto">
-        <h1>Latest Products</h1>
-      </div>
-      <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-        {products.map((product) => (
-          <Product key={product._id} product={product} />
-        ))}
-      </div>
+      {isLoading ? (
+        <h2>Loading...</h2>
+      ) : (
+        <>
+          <div className="prose my-6 mx-auto">
+            <h1>Latest Products</h1>
+          </div>
+          <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+            {products.map((product: ProductItem) => (
+              <Product key={product._id} product={product} />
+            ))}
+          </div>
+        </>
+      )}
     </>
   );
 };
