@@ -1,3 +1,5 @@
+import Loader from "../components/Loader";
+import ErrorMessage from "../components/Message/ErrorMessage";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { ProductItem } from "../utils/productType";
@@ -12,19 +14,18 @@ const Home = () => {
 
       return (
         <div>
-          <div>An error has occurred:</div>
-          <div>{errMsg}</div>
+          <ErrorMessage>{errMsg}</ErrorMessage>
         </div>
       );
     } else {
-      return <div>{error.message}</div>;
+      return <ErrorMessage>{error.message}</ErrorMessage>;
     }
   }
 
   return (
     <>
       {isLoading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : (
         <>
           <div className="prose my-6 mx-auto">

@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import Rating from "../components/Rating";
 import { useGetProductByIdQuery } from "../slices/productsApiSlice";
+import Loader from "../components/Loader";
+import ErrorMessage from "../components/Message/ErrorMessage";
 
 const Product = () => {
   const { id: productId } = useParams();
@@ -15,12 +17,11 @@ const Product = () => {
 
       return (
         <div>
-          <div>An error has occurred:</div>
-          <div>{errMsg}</div>
+          <ErrorMessage>{errMsg}</ErrorMessage>
         </div>
       );
     } else {
-      return <div>{error.message}</div>;
+      return <ErrorMessage>{error.message}</ErrorMessage>;
     }
   }
 
@@ -33,7 +34,7 @@ const Product = () => {
       </div>
 
       {isLoading ? (
-        <h2>Is loading...</h2>
+        <Loader />
       ) : (
         <>
           {" "}
