@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProductItem } from "../utils/productType";
-import { CartType } from "../utils/cartType";
+import { CartItem, CartType } from "../utils/cartType";
 import { updateCart } from "../utils/cartUtils";
 
 const initialState: CartType = localStorage.getItem("cart")
@@ -12,15 +11,15 @@ const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addToCart: (state, action) => {
-      const item: ProductItem = action.payload;
+      const item: CartItem = action.payload;
 
-      const existItem: ProductItem | undefined = state.cartItems.find(
+      const existItem: CartItem | undefined = state.cartItems.find(
         //dobrze tu typuje?
-        (x: ProductItem) => x._id === item._id
+        (x: CartItem) => x._id === item._id
       );
 
       if (existItem) {
-        state.cartItems = state.cartItems.map((x: ProductItem) =>
+        state.cartItems = state.cartItems.map((x: CartItem) =>
           x._id === item._id ? item : x
         );
       } else {

@@ -1,12 +1,15 @@
+import { WritableDraft } from "immer/dist/internal.js";
+import { CartItem, CartType } from "./cartType";
+
 export const addDecimals = (num: number) => {
   return (Math.round(num * 100) / 100).toFixed(2);
 };
 
-export const updateCart = (state) => {
+export const updateCart = (state: WritableDraft<CartType>) => {
   //Calculate items price
   state.itemPrice = addDecimals(
     state.cartItems.reduce(
-      (acc: number, item: any) => acc + item.price * item.qty, //fix typing later!!!
+      (acc: number, item: CartItem) => acc + item.price * item.qty,
       0
     )
   );

@@ -1,6 +1,8 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./slices/apiSlice";
 import cartSliceReducer from "./slices/cartSlice";
+
+export type RootState = ReturnType<typeof store.getState>;
 
 const store = configureStore({
   reducer: {
