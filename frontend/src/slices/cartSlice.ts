@@ -32,16 +32,18 @@ const cartSlice = createSlice({
       //Calculate items price
       state.itemPrice = addDecimals(
         state.cartItems.reduce(
-          (acc: any, item: any) => acc + item.price * item.qty, //fix typing later!!!
+          (acc: number, item: any) => acc + item.price * item.qty, //fix typing later!!!
           0
         )
       );
 
-      // Calculete shipping price (If order is over $100 then free, else $10 shipping)
-      state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10);
+      // Calculate shipping price (If order is over $100 then free, else $10 shipping)
+      state.shippingPrice = addDecimals(Number(state.itemPrice) > 100 ? 0 : 10);
 
       // Calculate tax price (15% tax)
-      state.taxPrice = addDecimals(Number((0.15 * state.itemPrice).toFixed(2)));
+      state.taxPrice = addDecimals(
+        Number((0.15 * Number(state.itemPrice)).toFixed(2))
+      );
 
       // Calculate total price
       state.totalPrice = (
