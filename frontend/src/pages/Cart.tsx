@@ -67,7 +67,10 @@ const Cart = () => {
         </div>
         <div className="card bg-base-100 shadow-xl h-min w-2/6">
           <div className="card-body prose">
-            <h2 className="m-0">Subtotal ({cartItems.length}) items</h2>
+            <h2 className="m-0">
+              Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+              items
+            </h2>
             <p className="m-0">
               ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)}
             </p>
