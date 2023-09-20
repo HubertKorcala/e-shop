@@ -47,7 +47,10 @@ const HeaderNavBar = () => {
                   ? "Item"
                   : "Items"}
               </span>
-              <span className="text-info">Subtotal: ${cart.totalPrice}</span>
+              <span className="text-info">
+                Subtotal: $
+                {cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+              </span>
               <div className="card-actions">
                 <Link to={`/cart`}>
                   <button className="btn btn-primary btn-block">
