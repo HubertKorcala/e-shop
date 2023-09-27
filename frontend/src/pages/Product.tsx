@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 
 const Product = () => {
   const { id: productId } = useParams();
-  const id = String(productId); //upewnienie sie ze zawsze bedzie string przez co da rade uzyc w useGetProductByIdQuery
+  const id = String(productId);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
