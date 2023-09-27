@@ -6,6 +6,8 @@ import { RootState } from "../store";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
   return (
     <header className="navbar bg-base-100 drop-shadow-lg rounded-box z-10">
       <div className="flex-1">
@@ -71,18 +73,28 @@ const HeaderNavBar = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <Link to={`/login`}>Logout</Link>
-            </li>
+            {userInfo ? (
+              <>
+                <li>
+                  <Link to={`/profile`}>Profile</Link>
+                </li>
+                <li>
+                  <Link to={`settings`}>Settings</Link>
+                </li>
+                <li>
+                  <Link to={`/logout`}>Logout</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to={`/login`}>Log In</Link>
+                </li>
+                <li>
+                  <Link to={`/register`}>Sign Up</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
         <ThemeToggle />
