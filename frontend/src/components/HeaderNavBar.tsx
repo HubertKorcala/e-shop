@@ -1,12 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import profilePicture from "../assets/images/profile-avatar.png";
 import ThemeToggle from "./ThemeToggle";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { useDispatch } from "react-redux";
+import { logout } from "../slices/authSlice";
+import { useLogoutMutation } from "../slices/usersApiSlice";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [logoutApiCall] = useLogoutMutation();
+
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall("").unwrap();
+      dispatch(logout());
+      navigate(`/login`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <header className="navbar bg-base-100 drop-shadow-lg rounded-box z-10">
@@ -84,7 +102,9 @@ const HeaderNavBar = () => {
                   <Link to={`settings`}>Settings</Link>
                 </li>
                 <li>
-                  <Link to={`/logout`}>Logout</Link>
+                  <a className=" cursor-pointer" onClick={logoutHandler}>
+                    Logout
+                  </a>
                 </li>
               </>
             ) : (
