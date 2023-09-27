@@ -76,7 +76,9 @@ const HeaderNavBar = () => {
             {userInfo ? (
               <>
                 <li>
-                  <Link to={`/profile`}>Profile</Link>
+                  <Link className="justify-between" to={`/profile`}>
+                    Profile <span className="badge">{userInfo.name}</span>
+                  </Link>
                 </li>
                 <li>
                   <Link to={`settings`}>Settings</Link>
