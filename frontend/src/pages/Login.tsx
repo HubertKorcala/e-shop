@@ -8,6 +8,7 @@ import { RootState } from "../store";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import Input, { LabelProps } from "../components/Input";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -42,40 +43,37 @@ const Login = () => {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  const inputData: LabelProps[] = [
+    {
+      label: "Email Address",
+      type: "email",
+      id: "email",
+      value: email,
+      placeHolder: "Enter email",
+      onChange: (e) => setEmail(e.target.value),
+    },
+    {
+      label: "Password",
+      type: "password",
+      id: "password",
+      value: password,
+      placeHolder: "Enter password",
+      onChange: (e) => setPassword(e.target.value),
+    },
+  ];
+
   return (
     <FormContainer>
       <form>
         <h1 className="mt-6">Sign in</h1>
-        <div>
-          <label htmlFor="email" className="mb-2">
-            Email Adress
-          </label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            placeholder="Enter email"
-            className="input input-bordered w-full max-w-md"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mt-2">
-          <label htmlFor="password" className="mb-2">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            placeholder="Enter password"
-            className="input input-bordered w-full max-w-md"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+        {inputData.map((data) => (
+          <Input key={data.id} data={data} />
+        ))}
         <button
           type="submit"
           onClick={signInHandler}
-          className="btn btn-primary mt-4"
+          className="btn btn-primary mt-1"
           disabled={isLoading}
         >
           Sing in
