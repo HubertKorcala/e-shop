@@ -1,4 +1,4 @@
-export type LabelProps = {
+export type InputProps = {
   label: string;
   type: string;
   id: string;
@@ -7,7 +7,7 @@ export type LabelProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Input: React.FC<{ data: LabelProps }> = (props) => {
+const Input: React.FC<{ data: InputProps }> = (props) => {
   return (
     <div className="mb-3">
       <label htmlFor={props.data.id} className="mb-2">

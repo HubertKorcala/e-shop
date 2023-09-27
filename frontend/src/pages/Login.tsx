@@ -8,7 +8,7 @@ import { RootState } from "../store";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
-import Input, { LabelProps } from "../components/Input";
+import Input, { InputProps } from "../components/Input";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,7 +44,7 @@ const Login = () => {
     }
   };
 
-  const inputData: LabelProps[] = [
+  const inputData: InputProps[] = [
     {
       label: "Email Address",
       type: "email",

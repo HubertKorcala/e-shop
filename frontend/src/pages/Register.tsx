@@ -8,7 +8,7 @@ import { RootState } from "../store";
 import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
-import Input, { LabelProps } from "../components/Input";
+import Input, { InputProps } from "../components/Input";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -50,7 +50,7 @@ const Register = () => {
     }
   };
 
-  const inputData: LabelProps[] = [
+  const inputData: InputProps[] = [
     {
       label: "Name",
       type: "string",
