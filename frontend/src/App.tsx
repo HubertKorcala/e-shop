@@ -1,8 +1,9 @@
-//import { Home } from "lucide-react";
 import "./App.css";
 import Footer from "./components/Footer";
 import HeaderNavBar from "./components/HeaderNavBar";
 import { Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <HeaderNavBar />
       <Outlet />
       <Footer />
+      <ToastContainer />
     </div>
   );
 }
