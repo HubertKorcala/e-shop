@@ -3,8 +3,8 @@ import { CartItem, CartType } from "../utils/cartType";
 import { updateCart } from "../utils/cartUtils";
 
 const initialState: CartType = localStorage.getItem("cart")
-  ? JSON.parse(String(localStorage.getItem("cart"))) // czy moge uzyc tu String???
-  : { cartItems: [] };
+  ? JSON.parse(String(localStorage.getItem("cart")))
+  : { cartItems: [], shippingAddress: {}, paymentMethod: `PayPal` };
 
 const cartSlice = createSlice({
   name: "cart",
@@ -14,7 +14,6 @@ const cartSlice = createSlice({
       const item: CartItem = action.payload;
 
       const existItem: CartItem | undefined = state.cartItems.find(
-        //dobrze tu typuje?
         (x: CartItem) => x._id === item._id
       );
 
@@ -33,9 +32,15 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    saveShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload;
+
+      return updateCart(state);
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, saveShippingAddress } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

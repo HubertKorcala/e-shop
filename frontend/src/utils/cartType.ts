@@ -15,8 +15,18 @@ export type CartItem = {
   qty: number;
 };
 
+export type shippingAddressType = {
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+};
+
 export type CartType = {
   cartItems: CartItem[];
+  shippingAddress: shippingAddressType;
+  paymentMethod: string;
+
   itemPrice: string;
   shippingPrice: string;
   taxPrice: string;
