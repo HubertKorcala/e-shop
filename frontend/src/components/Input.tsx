@@ -9,7 +9,7 @@ export type InputProps = {
 
 const Input: React.FC<{ data: InputProps }> = (props) => {
   return (
-    <div className="mb-3">
+    <div className="mb-3 flex flex-col">
       <label htmlFor={props.data.id} className="mb-2">
         {props.data.label}
       </label>

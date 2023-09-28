@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { saveShippingAddress } from "../slices/cartSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import CheckoutSteps from "../components/CheckoutSteps";
 
 const Shipping = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -65,7 +66,8 @@ const Shipping = () => {
   return (
     <FormContainer>
       <form>
-        <h1 className="mt-6">Shipping</h1>
+        <CheckoutSteps />
+        <h1 className="-mt-6">Shipping</h1>
         {inputData.map((data) => (
           <Input data={data} key={data.id} />
         ))}
