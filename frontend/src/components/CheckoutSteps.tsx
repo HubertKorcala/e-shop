@@ -21,7 +21,7 @@ const CheckoutSteps = ({ login, shipping, payment, order }: Props) => {
     : (login = true);
 
   return (
-    <ul className="steps">
+    <ul className="steps pl-0">
       <li className="step step-primary">
         {login ? (
           <Link className="flex items-center no-underline" to={`/login`}>
@@ -37,10 +37,7 @@ const CheckoutSteps = ({ login, shipping, payment, order }: Props) => {
       </li>
       <li className={shipping ? `step step-primary` : `step`}>
         {shipping ? (
-          <Link
-            className="flex items-center no-underline ml-4"
-            to={`/shipping`}
-          >
+          <Link className="flex items-center no-underline" to={`/shipping`}>
             <LiaShippingFastSolid />
             <p className="m-0 ml-1">Shipping</p>
           </Link>
