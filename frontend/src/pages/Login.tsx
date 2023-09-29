@@ -9,6 +9,7 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import Input, { InputProps } from "../components/Input";
+import CheckoutSteps from "../components/CheckoutSteps";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -62,11 +63,12 @@ const Login = () => {
       onChange: (e) => setPassword(e.target.value),
     },
   ];
-
+  //"mt-6"
   return (
     <FormContainer>
+      {redirect === "/shipping" && <CheckoutSteps login />}
       <form>
-        <h1 className="mt-6">Sign in</h1>
+        <h1 className={redirect === `/shipping` ? `-mt-6` : `mt-6`}>Sign in</h1>
         {inputData.map((data) => (
           <Input key={data.id} data={data} />
         ))}
