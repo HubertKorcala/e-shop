@@ -67,8 +67,8 @@ const Login = () => {
   return (
     <FormContainer>
       {redirect === "/shipping" && <CheckoutSteps login />}
+      <h1 className={redirect === `/shipping` ? `-mt-6` : `mt-6`}>Sign in</h1>
       <form>
-        <h1 className={redirect === `/shipping` ? `-mt-6` : `mt-6`}>Sign in</h1>
         {inputData.map((data) => (
           <Input key={data.id} data={data} />
         ))}

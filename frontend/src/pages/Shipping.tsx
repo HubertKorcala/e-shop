@@ -65,9 +65,9 @@ const Shipping = () => {
   ];
   return (
     <FormContainer>
+      <CheckoutSteps shipping />
+      <h1 className="-mt-6">Shipping</h1>
       <form>
-        <CheckoutSteps shipping />
-        <h1 className="-mt-6">Shipping</h1>
         {inputData.map((data) => (
           <Input data={data} key={data.id} />
         ))}

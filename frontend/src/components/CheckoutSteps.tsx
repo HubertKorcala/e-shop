@@ -18,7 +18,7 @@ const CheckoutSteps = ({ login, shipping, payment, order }: Props) => {
     ? (shipping = true) && (login = true)
     : order === true
     ? (payment = true) && (shipping = true) && (login = true)
-    : (login = true);
+    : null;
 
   return (
     <ul className="steps pl-0">
