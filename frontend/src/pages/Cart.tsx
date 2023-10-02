@@ -83,7 +83,10 @@ const Cart = () => {
               items
             </h2>
             <p className="m-0">
-              ${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0)}
+              $
+              {cartItems
+                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .toFixed(2)}
             </p>
             <div className="divider my-0"></div>
             <button

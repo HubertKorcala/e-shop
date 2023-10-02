@@ -69,7 +69,9 @@ const HeaderNavBar = () => {
               </span>
               <span className="text-info">
                 Subtotal: $
-                {cart.cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                {cart.cartItems
+                  .reduce((a, c) => a + c.price * c.qty, 0)
+                  .toFixed(2)}
               </span>
               <div className="card-actions">
                 <Link to={`/cart`}>
