@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
-import { CartItem } from "../utils/cartType";
+import { CartItem } from "../types/cartType";
 import { FaTrash } from "react-icons/fa";
 
 const Cart = () => {
@@ -34,7 +34,7 @@ const Cart = () => {
           {cartItems.length === 0 ? (
             <p>Shopping cart is empty</p>
           ) : (
-            cartItems.map((item) => (
+            cartItems.map((item: CartItem) => (
               <div key={item._id}>
                 <div className="flex prose justify-between">
                   <img
@@ -79,13 +79,20 @@ const Cart = () => {
         <div className="card bg-base-100 shadow-xl h-min mt-10 md:mt-0 md:w-80">
           <div className="card-body prose">
             <h2 className="m-0">
-              Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
-              items
+              Subtotal (
+              {cartItems.reduce(
+                (acc: number, item: CartItem) => acc + item.qty,
+                0
+              )}
+              ) items
             </h2>
             <p className="m-0">
               $
               {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
+                .reduce(
+                  (acc: number, item: CartItem) => acc + item.qty * item.price,
+                  0
+                )
                 .toFixed(2)}
             </p>
             <div className="divider my-0"></div>

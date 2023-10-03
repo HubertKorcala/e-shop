@@ -3,7 +3,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import FormContainer from "../components/FormContainer";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
-import { CartItem } from "../utils/cartType";
+import { CartItem } from "../types/cartType";
 import { useEffect } from "react";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import ErrorMessage from "../components/Message/ErrorMessage";
@@ -34,7 +34,7 @@ const PlaceOrder = () => {
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.cartItems
-          .reduce((a, item) => a + item.price * item.qty, 0)
+          .reduce((a: number, item: CartItem) => a + item.price * item.qty, 0)
           .toFixed(2),
         shippingPrice: cart.shippingPrice,
         taxPrice: cart.taxPrice,
@@ -42,8 +42,8 @@ const PlaceOrder = () => {
       }).unwrap();
       dispanch(clearCartItems());
       navigate(`/order/${res._id}`);
-    } catch (error) {
-      console.log(error.data.message);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       toast.error(error.data.message);
     }
   };
@@ -107,7 +107,10 @@ const PlaceOrder = () => {
               <p className="card-title justify-end m-0">
                 $
                 {cart.cartItems
-                  .reduce((a, item) => a + item.price * item.qty, 0)
+                  .reduce(
+                    (a: number, item: CartItem) => a + item.price * item.qty,
+                    0
+                  )
                   .toFixed(2)}
               </p>
             </div>
@@ -131,7 +134,7 @@ const PlaceOrder = () => {
             <div className="divider my-0"></div>
             {error && (
               <>
-                <ErrorMessage>{String(error)}</ErrorMessage>
+                <ErrorMessage message={String(error)} />
                 <div className="divider my-0"></div>
               </>
             )}

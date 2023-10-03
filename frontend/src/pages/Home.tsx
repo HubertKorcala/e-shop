@@ -2,7 +2,7 @@ import Loader from "../components/Loader";
 import ErrorMessage from "../components/Message/ErrorMessage";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
-import { ProductItem } from "../utils/productType";
+import { ProductItem } from "../types/productType";
 
 const Home = () => {
   const { data: products, isLoading, error } = useGetProductsQuery({});
@@ -14,11 +14,11 @@ const Home = () => {
 
       return (
         <div>
-          <ErrorMessage>{errMsg}</ErrorMessage>
+          <ErrorMessage message={errMsg} />
         </div>
       );
     } else {
-      return <ErrorMessage>{error.message}</ErrorMessage>;
+      return <ErrorMessage message={error.message} />;
     }
   }
 

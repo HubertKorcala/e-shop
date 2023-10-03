@@ -4,7 +4,7 @@ import { useGetProductByIdQuery } from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/Message/ErrorMessage";
 import { useState } from "react";
-import { ProductItem } from "../utils/productType";
+import { ProductItem } from "../types/productType";
 import { addToCart } from "../slices/cartSlice";
 import { useDispatch } from "react-redux";
 
@@ -33,18 +33,18 @@ const Product = () => {
 
       return (
         <div>
-          <ErrorMessage>{errMsg}</ErrorMessage>
+          <ErrorMessage message={errMsg} />
         </div>
       );
     } else {
-      return <ErrorMessage>{error.message}</ErrorMessage>;
+      return <ErrorMessage message={error.message} />;
     }
   }
 
   return (
     <>
       <div className="mx-2 md:mx-0">
-        <Link to="/">
+        <Link className="mx-2 md:mx-0" to="/">
           <button className="btn w-24 mt-12 mb-6">Go back</button>
         </Link>
       </div>
@@ -53,7 +53,6 @@ const Product = () => {
         <Loader />
       ) : (
         <>
-          {" "}
           <div className="md:flex gap-6 justify-between mb-4">
             <div className=" mx-3 md:mx-0">
               <img src={productItem?.image} alt="" />
