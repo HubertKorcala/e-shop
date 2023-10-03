@@ -19,6 +19,12 @@ export type OrderType = {
   totalPrice: number;
   deliveredAt: Date;
   paidAt: Date;
+  paymentResult: {
+    id: string;
+    status: string;
+    update_time: string;
+    email_address: string;
+  };
   user: {
     email: string;
     name: string;
