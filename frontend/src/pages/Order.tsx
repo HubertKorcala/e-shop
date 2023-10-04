@@ -13,8 +13,6 @@ import {
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -39,14 +37,12 @@ const Order = () => {
     order && !order.isPaid && !order.isDelivered ? "paypal" : "none"
   );
 
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && paypal.clientId) {
       const loadPayPalScript = async () => {
         paypalDispatch({
           type: "resetOptions",
-          value: { "client-id": paypal.clientId, currency: "USD" },
+          value: { clientId: paypal.clientId, currency: "USD" },
         });
         paypalDispatch({
           type: "setLoadingStatus",
