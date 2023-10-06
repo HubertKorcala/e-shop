@@ -22,6 +22,8 @@ import Payment from "./pages/Payment.tsx";
 import PlaceOrder from "./pages/PlaceOrder.tsx";
 import Order from "./pages/Order.tsx";
 import Profile from "./pages/Profile.tsx";
+import OrderList from "./pages/admin/OrderList.tsx";
+import AdminRoute from "./components/AdminRoute.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +39,9 @@ const router = createBrowserRouter(
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/order/:id" element={<Order />} />
         <Route path="/profile" element={<Profile />} />
+      </Route>
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/orderlist" element={<OrderList />} />
       </Route>
     </Route>
   )
