@@ -7,6 +7,12 @@ import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../slices/authSlice";
+import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
+import { OrderType } from "../types/orderType";
+import { RxCross2 } from "react-icons/rx";
+import { MdDone } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import ErrorMessage from "../components/Message/ErrorMessage";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -15,11 +21,20 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
+
+  const {
+    data: orders,
+    isLoading: loadingOrders,
+    error: ordersError,
+  } = useGetMyOrdersQuery(userInfo?._id);
+
+  console.log(orders, loadingOrders, ordersError);
 
   useEffect(() => {
     if (userInfo) {
@@ -94,25 +109,85 @@ const Profile = () => {
     }
   };
 
+  const detailsHandler = (id: string) => {
+    navigate(`/order/${id}`);
+  };
+
   return (
-    <>
-      <div className="prose my-4">
-        <h1> User Profile</h1>
+    <div className="flex justify-evenly flex-wrap gap-6">
+      <div className=" w-96">
+        <div className="prose my-4">
+          <h1> User Profile</h1>
+        </div>
+        <div className="">
+          {inputData.map((data) => (
+            <Input data={data} key={data.id} />
+          ))}
+          <button
+            className="btn btn-primary"
+            type="submit"
+            onClick={submitHandler}
+          >
+            Update
+          </button>
+          {loadingUpdateProfile && <Loader />}
+        </div>
       </div>
       <div className="">
-        {inputData.map((data) => (
-          <Input data={data} key={data.id} />
-        ))}
-        <button
-          className="btn btn-primary"
-          type="submit"
-          onClick={submitHandler}
-        >
-          Update
-        </button>
-        {loadingUpdateProfile && <Loader />}
+        <div className="prose my-4">
+          <h1>My Orders</h1>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {loadingOrders && <Loader />}
+              {ordersError && (
+                <>
+                  <ErrorMessage message={String(ordersError)} />
+                </>
+              )}
+              {orders && orders.length === 0 && <p>No orders</p>}
+              {!loadingOrders &&
+                orders.map((order: OrderType, index: number) => (
+                  <tr className="hover" key={index}>
+                    <th>{index + 1}</th>
+                    <td>{String(order._id)}</td>
+                    <td>{String(order.createdAt).substring(0, 10)}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>
+                      {order.isPaid ? (
+                        String(order.paidAt).substring(0, 10)
+                      ) : (
+                        <RxCross2 />
+                      )}
+                    </td>
+                    <td>{order.isDelivered ? <MdDone /> : <RxCross2 />}</td>
+                    <td>
+                      <button
+                        onClick={() => detailsHandler(order._id)}
+                        className="btn btn-xs"
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
