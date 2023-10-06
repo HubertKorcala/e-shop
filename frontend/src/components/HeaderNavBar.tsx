@@ -6,6 +6,8 @@ import { RootState } from "../store";
 import { useDispatch } from "react-redux";
 import { logout } from "../slices/authSlice";
 import { useLogoutMutation } from "../slices/usersApiSlice";
+import { CartItem } from "../types/cartType";
+import { RiAdminLine } from "react-icons/ri";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -52,7 +54,10 @@ const HeaderNavBar = () => {
                 />
               </svg>
               <span className="badge badge-sm indicator-item">
-                {cart.cartItems.reduce((a, c) => a + c.qty, 0)}
+                {cart.cartItems.reduce(
+                  (a: number, c: CartItem) => a + c.qty,
+                  0
+                )}
               </span>
             </div>
           </label>
@@ -62,15 +67,21 @@ const HeaderNavBar = () => {
           >
             <div className="card-body">
               <span className="font-bold text-lg">
-                {cart.cartItems.reduce((a, c) => a + c.qty, 0)}{" "}
-                {cart.cartItems.reduce((a, c) => a + c.qty, 0) === 1
+                {cart.cartItems.reduce(
+                  (a: number, c: CartItem) => a + c.qty,
+                  0
+                )}{" "}
+                {cart.cartItems.reduce(
+                  (a: number, c: CartItem) => a + c.qty,
+                  0
+                ) === 1
                   ? "Item"
                   : "Items"}
               </span>
               <span className="text-info">
                 Subtotal: $
                 {cart.cartItems
-                  .reduce((a, c) => a + c.price * c.qty, 0)
+                  .reduce((a: number, c: CartItem) => a + c.price * c.qty, 0)
                   .toFixed(2)}
               </span>
               <div className="card-actions">
@@ -121,6 +132,27 @@ const HeaderNavBar = () => {
             )}
           </ul>
         </div>
+        {userInfo && userInfo.isAdmin && (
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <RiAdminLine size={25} />
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link to={`/productlist`}>Products</Link>
+              </li>
+              <li>
+                <Link to={`/userlist`}>Users</Link>
+              </li>
+              <li>
+                <Link to={`/orderlist`}>Orders</Link>
+              </li>
+            </ul>
+          </div>
+        )}
         <ThemeToggle />
       </div>
     </header>
