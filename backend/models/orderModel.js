@@ -93,6 +93,10 @@ const orderShema = mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
   { timesstamps: true }
 );

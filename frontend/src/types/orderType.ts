@@ -19,6 +19,7 @@ export type OrderType = {
   totalPrice: number;
   deliveredAt: Date;
   paidAt: Date;
+  createdAt: Date;
   paymentResult: {
     id: string;
     status: string;
