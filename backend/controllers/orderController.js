@@ -94,7 +94,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route  PUT /api/orders/:id/deliver
 // @access Private/Admin
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
-  const order = await Order.findById(res._id);
+  const order = await Order.findById(req.params.id);
 
   if (order) {
     order.isDelivered = true;
@@ -113,7 +113,14 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route  GET /api/orders
 // @access Private/Admin
 const getAllOrders = asyncHandler(async (req, res) => {
-  res.send("get all orders");
+  const orders = await Order.find({}).populate("user", "id name");
+
+  if (orders) {
+    res.status(200).json(orders);
+  } else {
+    res.status(404);
+    throw new Error("Orders not found");
+  }
 });
 
 export {
