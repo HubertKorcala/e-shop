@@ -1,12 +1,24 @@
 import { BiSolidEdit } from "react-icons/bi";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Message/ErrorMessage";
-import { useGetProductsQuery } from "../../slices/productsApiSlice";
+import {
+  useCreateProductMutation,
+  useGetProductsQuery,
+} from "../../slices/productsApiSlice";
 import { ProductItem } from "../../types/productType";
 import { FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const ProductList = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery(null);
+  const {
+    data: products,
+    isLoading,
+    error,
+    refetch,
+  } = useGetProductsQuery(null);
+
+  const [createProduct, { isLoading: loadingCreate }] =
+    useCreateProductMutation();
 
   const editProductHandler = (id: string) => {
     console.log(id);
@@ -16,13 +28,27 @@ const ProductList = () => {
     console.log(id);
   };
 
+  const addProductHandler = async () => {
+    if (window.confirm("Are you sure you want to create a new product?")) {
+      try {
+        await createProduct(null);
+        refetch();
+        toast.success("Product Created Successfully");
+      } catch (err: any) {
+        toast.error(err?.data?.message || err.message);
+      }
+    }
+  };
+
   return (
     <div className="">
       <div className=" my-4 flex justify-between w-full">
         <div className="prose">
           <h1>Products</h1>
         </div>
-        <button className="btn btn-primary">Add Product</button>
+        <button onClick={addProductHandler} className="btn btn-primary">
+          Add Product
+        </button>
       </div>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -37,6 +63,7 @@ const ProductList = () => {
             </tr>
           </thead>
           <tbody>
+            {loadingCreate && <Loader />}
             {isLoading && <Loader />}
             {error && (
               <>
