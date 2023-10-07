@@ -55,7 +55,13 @@ const OrderList = () => {
                       <RxCross2 />
                     )}
                   </td>
-                  <td>{order.isDelivered ? <MdDone /> : <RxCross2 />}</td>
+                  <td>
+                    {order.isDelivered ? (
+                      String(order.deliveredAt).substring(0, 10)
+                    ) : (
+                      <RxCross2 />
+                    )}
+                  </td>
                   <td>
                     <button
                       onClick={() => detailsHandler(order._id)}
