@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import {
+  useDeliverOrderMutation,
   useGetOrderDetailsQuery,
   useGetPayPalClientIdQuery,
   usePayOrderMutation,
@@ -15,9 +16,13 @@ import {
 } from "@paypal/react-paypal-js";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const Order = () => {
   const { id: orderId } = useParams();
+
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
   const { data, refetch, isLoading, error } = useGetOrderDetailsQuery(
     String(orderId)
@@ -28,6 +33,9 @@ const Order = () => {
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
+
+  const [deliverOrder, { isLoading: loadingDelive }] =
+    useDeliverOrderMutation();
 
   const {
     data: paypal,
@@ -91,6 +99,16 @@ const Order = () => {
         return orderId;
       });
   }
+
+  const deliveredHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order delivered");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   return isLoading ? (
     <Loader />
@@ -225,6 +243,20 @@ const Order = () => {
                 </div>
               </>
             )}
+            {userInfo &&
+              userInfo.isAdmin &&
+              order.isPaid &&
+              !order.isDelivered && (
+                <>
+                  <div className="divider my-0"></div>
+                  <button
+                    className="btn btn-primary"
+                    onClick={deliveredHandler}
+                  >
+                    Mark As Delivered
+                  </button>
+                </>
+              )}
           </div>
         </div>
       </div>
