@@ -142,13 +142,13 @@ const HeaderNavBar = () => {
               className="menu menu-sm dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <Link to={`/productlist`}>Products</Link>
+                <Link to={`/admin/productlist`}>Products</Link>
               </li>
               <li>
-                <Link to={`/userlist`}>Users</Link>
+                <Link to={`/admin/userlist`}>Users</Link>
               </li>
               <li>
-                <Link to={`/orderlist`}>Orders</Link>
+                <Link to={`/admin/orderlist`}>Orders</Link>
               </li>
             </ul>
           </div>

@@ -8,6 +8,7 @@ import {
 import { ProductItem } from "../../types/productType";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const {
@@ -20,8 +21,10 @@ const ProductList = () => {
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
+  const navigate = useNavigate();
+
   const editProductHandler = (id: string) => {
-    console.log(id);
+    navigate(`/admin/product/${id}/edit`);
   };
 
   const deleteProductHandler = (id: string) => {
@@ -71,8 +74,8 @@ const ProductList = () => {
               </>
             )}
             {!isLoading &&
-              products.map((product: ProductItem, index: number) => (
-                <tr className="hover" key={index}>
+              products.map((product: ProductItem) => (
+                <tr className="hover" key={product._id}>
                   <td>{String(product._id)}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
