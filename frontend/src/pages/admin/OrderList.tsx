@@ -3,7 +3,6 @@ import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Message/ErrorMessage";
 import { useGetAllOrdersQuery } from "../../slices/ordersApiSlice";
 import { OrderType } from "../../types/orderType";
-import { MdDone } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const OrderList = () => {
@@ -52,14 +51,14 @@ const OrderList = () => {
                     {order.isPaid ? (
                       String(order.paidAt).substring(0, 10)
                     ) : (
-                      <RxCross2 />
+                      <RxCross2 style={{ color: "red" }} />
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
                       String(order.deliveredAt).substring(0, 10)
                     ) : (
-                      <RxCross2 />
+                      <RxCross2 style={{ color: "#8b0000" }} />
                     )}
                   </td>
                   <td>

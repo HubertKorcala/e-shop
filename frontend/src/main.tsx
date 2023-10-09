@@ -26,6 +26,7 @@ import OrderList from "./pages/admin/OrderList.tsx";
 import AdminRoute from "./components/AdminRoute.tsx";
 import ProductList from "./pages/admin/ProductList.tsx";
 import ProductEdit from "./pages/admin/ProductEdit.tsx";
+import UserList from "./pages/admin/UserList.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
       <Route path="" element={<AdminRoute />}>
         <Route path="/admin/orderlist" element={<OrderList />} />
         <Route path="/admin/productlist" element={<ProductList />} />
+        <Route path="/admin/userlist" element={<UserList />} />
         <Route path="/admin/product/:id/edit" element={<ProductEdit />} />
       </Route>
     </Route>
