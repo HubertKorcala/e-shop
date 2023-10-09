@@ -10,14 +10,17 @@ import { MdDone } from "react-icons/md";
 import { BiSolidEdit } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UserList = () => {
-  const { data: users, refetch, isLoading, isError } = useGetUsersQuery();
+  const { data: users, refetch, isLoading, isError } = useGetUsersQuery(null);
 
   const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
+  const navigate = useNavigate();
+
   const updateUserHandler = (id: string) => {
-    console.log(id);
+    navigate(`/admin/user/${id}/edit`);
   };
 
   const deleteUserHandler = async (user: UserType) => {
@@ -55,10 +58,11 @@ const UserList = () => {
             {loadingDelete && <Loader />}
             {isError && (
               <>
-                <ErrorMessage message={String(isError)} />
+                <ErrorMessage message={""} />
               </>
             )}
             {!isLoading &&
+              users &&
               users.map((user: UserType) => (
                 <tr className="hover" key={user._id}>
                   <td>{String(user._id)}</td>
