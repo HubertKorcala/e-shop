@@ -1,21 +1,38 @@
 import { RxCross2 } from "react-icons/rx";
 import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Message/ErrorMessage";
-import { useGetUsersQuery } from "../../slices/usersApiSlice";
+import {
+  useDeleteUserMutation,
+  useGetUsersQuery,
+} from "../../slices/usersApiSlice";
 import { UserType } from "../../types/userType";
 import { MdDone } from "react-icons/md";
 import { BiSolidEdit } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const UserList = () => {
-  const { data: users, isLoading, isError } = useGetUsersQuery();
+  const { data: users, refetch, isLoading, isError } = useGetUsersQuery();
+
+  const [deleteUser, { isLoading: loadingDelete }] = useDeleteUserMutation();
 
   const updateUserHandler = (id: string) => {
     console.log(id);
   };
 
-  const deleteUserHandler = (id: string) => {
-    console.log(id);
+  const deleteUserHandler = async (user: UserType) => {
+    if (user.isAdmin) {
+      return toast.error("Admin cannot be deleted");
+    }
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      try {
+        await deleteUser(user._id).unwrap();
+        refetch();
+        toast.success("User Deleted");
+      } catch (err: any) {
+        toast.error(err?.data?.message || err.message);
+      }
+    }
   };
   return (
     <div className="">
@@ -35,6 +52,7 @@ const UserList = () => {
           </thead>
           <tbody>
             {isLoading && <Loader />}
+            {loadingDelete && <Loader />}
             {isError && (
               <>
                 <ErrorMessage message={String(isError)} />
@@ -62,7 +80,7 @@ const UserList = () => {
                         <BiSolidEdit />
                       </button>
                       <button
-                        onClick={() => deleteUserHandler(user._id)}
+                        onClick={() => deleteUserHandler(user)}
                         className="btn btn-xs"
                       >
                         <FaTrash style={{ color: "#8b0000" }} />
