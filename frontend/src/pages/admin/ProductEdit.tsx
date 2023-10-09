@@ -166,17 +166,19 @@ const ProductEdit = () => {
         <form>
           {product &&
             inputData.map((input) => <Input key={input.id} data={input} />)}
-          <div className="mb-3 flex flex-col">
-            <label htmlFor="image" className="mb-2">
-              Image
-            </label>
-            <input
-              type="file"
-              id="image"
-              className="file-input file-input-bordered  w-full"
-              onChange={uploadFileHandler}
-            />
-          </div>
+          {product && (
+            <div className="mb-3 flex flex-col">
+              <label htmlFor="image" className="mb-2">
+                Image
+              </label>
+              <input
+                type="file"
+                id="image"
+                className="file-input file-input-bordered  w-full"
+                onChange={uploadFileHandler}
+              />
+            </div>
+          )}
           <button
             type="submit"
             onClick={updateProductHandler}

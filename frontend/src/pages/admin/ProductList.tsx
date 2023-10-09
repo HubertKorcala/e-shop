@@ -3,6 +3,7 @@ import Loader from "../../components/Loader";
 import ErrorMessage from "../../components/Message/ErrorMessage";
 import {
   useCreateProductMutation,
+  useDeleteProductMutation,
   useGetProductsQuery,
 } from "../../slices/productsApiSlice";
 import { ProductItem } from "../../types/productType";
@@ -21,14 +22,13 @@ const ProductList = () => {
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+
   const navigate = useNavigate();
 
   const editProductHandler = (id: string) => {
     navigate(`/admin/product/${id}/edit`);
-  };
-
-  const deleteProductHandler = (id: string) => {
-    console.log(id);
   };
 
   const addProductHandler = async () => {
@@ -40,6 +40,20 @@ const ProductList = () => {
       } catch (err: any) {
         toast.error(err?.data?.message || err.message);
       }
+    }
+  };
+
+  const deleteProductHandler = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) {
+      return;
+    }
+
+    try {
+      await deleteProduct(id).unwrap();
+      refetch();
+      toast.success("Product Deleted");
+    } catch (err: any) {
+      toast.error(err?.data?.message || err.message);
     }
   };
 
@@ -67,6 +81,7 @@ const ProductList = () => {
           </thead>
           <tbody>
             {loadingCreate && <Loader />}
+            {loadingDelete && <Loader />}
             {isLoading && <Loader />}
             {error && (
               <>
