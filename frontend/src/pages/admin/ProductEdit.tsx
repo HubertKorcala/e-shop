@@ -1,9 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Input, { InputProps } from "../../components/Input";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   useGetProductByIdQuery,
   useUpdateProductMutation,
+  useUploadProductImageMutation,
 } from "../../slices/productsApiSlice";
 import { ProductItem } from "../../types/productType";
 import Loader from "../../components/Loader";
@@ -13,19 +14,25 @@ import { toast } from "react-toastify";
 const ProductEdit = () => {
   const { id: productId } = useParams();
 
-  const { data, isLoading, error } = useGetProductByIdQuery(String(productId));
+  const { data, isLoading, refetch, error } = useGetProductByIdQuery(
+    String(productId)
+  );
 
   const product: ProductItem = data;
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
 
-  const [name, setName] = useState(product?.name || "");
-  const [price, setPrice] = useState(product?.price || "");
-  const [brand, setBrand] = useState(product?.brand || "");
-  const [countInStock, setCountInStock] = useState(product?.countInStock || "");
-  const [category, setCategory] = useState(product?.category || "");
-  const [description, setDescription] = useState(product?.description || "");
+  const [uploadProductImage, { isLoading: loadingUpload }] =
+    useUploadProductImageMutation();
+
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [brand, setBrand] = useState("");
+  const [countInStock, setCountInStock] = useState(0);
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
 
   const navigate = useNavigate();
 
@@ -37,6 +44,7 @@ const ProductEdit = () => {
       setCountInStock(product.countInStock);
       setCategory(product.category);
       setDescription(product.description);
+      setImage(product.image);
     }
   }, [product]);
 
@@ -108,23 +116,39 @@ const ProductEdit = () => {
 
   const updateProductHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const updatedProduct = {
-      productId,
-      name: name,
-      price: price,
-      brand: brand,
-      countInStock: countInStock,
-      category: category,
-      description: description,
-    };
-
-    const result: any = await updateProduct(updatedProduct);
-    if (result.error) {
-      toast.error(result.error);
-    } else {
+    try {
+      await updateProduct({
+        productId,
+        name,
+        price,
+        brand,
+        countInStock,
+        category,
+        description,
+        image,
+      }).unwrap();
       toast.success("Product updated");
+      refetch();
       navigate("/admin/productlist");
+    } catch (err: any) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  const uploadFileHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
+    if (e.target.files?.length !== 1) {
+      return toast.error("Please select only one image");
+    }
+
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (error: any) {
+      toast.error(error?.data?.message || error?.message);
     }
   };
   return (
@@ -142,11 +166,22 @@ const ProductEdit = () => {
         <form>
           {product &&
             inputData.map((input) => <Input key={input.id} data={input} />)}
+          <div className="mb-3 flex flex-col">
+            <label htmlFor="image" className="mb-2">
+              Image
+            </label>
+            <input
+              type="file"
+              id="image"
+              className="file-input file-input-bordered  w-full"
+              onChange={uploadFileHandler}
+            />
+          </div>
           <button
             type="submit"
             onClick={updateProductHandler}
             className="btn btn-primary mt-4"
-            disabled={loadingUpdate}
+            disabled={loadingUpdate || loadingUpload}
           >
             Update
           </button>
