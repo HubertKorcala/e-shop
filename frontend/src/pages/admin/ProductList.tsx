@@ -9,15 +9,15 @@ import {
 import { ProductItem } from "../../types/productType";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Paginate from "../../components/Paginate";
 
 const ProductList = () => {
-  const {
-    data: products,
-    isLoading,
-    error,
-    refetch,
-  } = useGetProductsQuery(null);
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
@@ -56,6 +56,7 @@ const ProductList = () => {
       toast.error(err?.data?.message || err.message);
     }
   };
+  console.log(data);
 
   return (
     <div className="">
@@ -89,7 +90,7 @@ const ProductList = () => {
               </>
             )}
             {!isLoading &&
-              products.map((product: ProductItem) => (
+              data.products.map((product: ProductItem) => (
                 <tr className="hover" key={product._id}>
                   <td>{String(product._id)}</td>
                   <td>{product.name}</td>
@@ -117,6 +118,11 @@ const ProductList = () => {
           </tbody>
         </table>
       </div>
+      {!isLoading && (
+        <div className="mt-8 flex justify-center">
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
+        </div>
+      )}
     </div>
   );
 };
