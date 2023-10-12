@@ -1,11 +1,15 @@
+import { useParams } from "react-router-dom";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/Message/ErrorMessage";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { ProductItem } from "../types/productType";
+import Paginate from "../components/Paginate";
 
 const Home = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery({});
+  const { pageNumber } = useParams();
+
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
   if (error) {
     if ("status" in error) {
@@ -32,9 +36,12 @@ const Home = () => {
             <h1>Latest Products</h1>
           </div>
           <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
-            {products.map((product: ProductItem) => (
+            {data.products.map((product: ProductItem) => (
               <Product key={product._id} product={product} />
             ))}
+          </div>
+          <div className="mt-8 mx-auto">
+            <Paginate pages={data.pages} page={data.page} />
           </div>
         </>
       )}
