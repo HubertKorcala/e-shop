@@ -1,12 +1,17 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Rating from "../components/Rating";
-import { useGetProductByIdQuery } from "../slices/productsApiSlice";
+import {
+  useAddReviewMutation,
+  useGetProductByIdQuery,
+} from "../slices/productsApiSlice";
 import Loader from "../components/Loader";
 import ErrorMessage from "../components/Message/ErrorMessage";
 import { useState } from "react";
 import { ProductItem } from "../types/productType";
 import { addToCart } from "../slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { RootState } from "../store";
 
 const Product = () => {
   const { id: productId } = useParams();
@@ -15,9 +20,21 @@ const Product = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+
   const [qty, setQty] = useState(1);
 
-  const { data: product, isLoading, error } = useGetProductByIdQuery(id);
+  const {
+    data: product,
+    refetch,
+    isLoading,
+    error,
+  } = useGetProductByIdQuery(id);
+
+  const [addReview, { isLoading: loadingReview }] = useAddReviewMutation();
 
   const productItem: ProductItem = product;
 
@@ -41,6 +58,19 @@ const Product = () => {
     }
   }
 
+  const reviewSubmitHandler = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await addReview({ productId, rating, comment }).unwrap();
+      refetch();
+      toast.success("Review submitted successfully");
+      setRating(5);
+      setComment("");
+    } catch (err) {
+      toast.error("Review submission failed");
+    }
+  };
+
   return (
     <>
       <div className="mx-2 md:mx-0">
@@ -48,6 +78,8 @@ const Product = () => {
           <button className="btn w-24 mt-12 mb-6">Go back</button>
         </Link>
       </div>
+
+      {loadingReview && <Loader />}
 
       {isLoading ? (
         <Loader />
@@ -117,6 +149,155 @@ const Product = () => {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="mt-2 max-w-2xl">
+            <div className="alert mb-4">
+              <div className="prose">
+                <h2>Reviews</h2>
+              </div>
+            </div>
+            {productItem?.reviews.length > 0 ? (
+              productItem?.reviews.map((review) => (
+                <div key={review._id} className="chat chat-start">
+                  <div className="chat-header flex">
+                    {review.name}
+                    <div className="ml-2 ">
+                      <Rating style="text-xs" value={review.rating} />
+                    </div>
+                  </div>
+                  <div className="chat-bubble">{review.comment}</div>
+                  <div className="chat-footer opacity-50">
+                    {String(review.createdAt).substring(0, 10)}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="alert alert-info mb-6">
+                <span>No Reviews.</span>
+              </div>
+            )}
+            <div className="w-11/12 mx-auto">
+              <div className="alert my-4">
+                <div className="prose">
+                  <h2>Write a Customer Review</h2>
+                </div>
+              </div>
+              {userInfo ? (
+                <form>
+                  <div className="flex mb-4">
+                    <p>Rating</p>
+                    <div className="rating rating-half">
+                      <input
+                        type="radio"
+                        onChange={() => setRating(0)}
+                        name="rating-10"
+                        className="rating-hidden"
+                        checked={rating === 0}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(0.5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-1"
+                        checked={rating === 0.5}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(1)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-2"
+                        checked={rating === 1}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(1.5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-1"
+                        checked={rating === 1.5}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(2)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-2"
+                        checked={rating === 2}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(2.5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-1"
+                        checked={rating === 2.5}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(3)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-2"
+                        checked={rating === 3}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(3.5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-1"
+                        checked={rating === 3.5}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(4)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-2"
+                        checked={rating === 4}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(4.5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-1"
+                        checked={rating === 4.5}
+                      />
+                      <input
+                        type="radio"
+                        onChange={() => setRating(5)}
+                        name="rating-10"
+                        className="mask mask-star-2 mask-half-2"
+                        checked={rating === 5}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-control">
+                    <label htmlFor="comment" className="mb-2">
+                      Comment
+                    </label>
+                    <textarea
+                      className="textarea textarea-bordered h-24"
+                      placeholder="Enter comment"
+                      id="comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    ></textarea>
+                  </div>
+                  <button
+                    type="submit"
+                    onClick={reviewSubmitHandler}
+                    className="btn btn-primary my-4"
+                  >
+                    Submit
+                  </button>
+                </form>
+              ) : (
+                <div className="alert alert-info mb-6">
+                  <span>
+                    Please{" "}
+                    <Link className="link" to="/login">
+                      sign in
+                    </Link>{" "}
+                    to write a review
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </>

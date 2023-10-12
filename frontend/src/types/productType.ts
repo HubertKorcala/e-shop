@@ -9,6 +9,7 @@ export type ProductItem = {
   countInStock: number;
   rating: number;
   reviews: {
+    _id: string;
     user: string;
     name: string;
     rating: number;
