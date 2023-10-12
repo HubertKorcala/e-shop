@@ -8,6 +8,7 @@ import { logout } from "../slices/authSlice";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { CartItem } from "../types/cartType";
 import { RiAdminLine } from "react-icons/ri";
+import SearchBox from "./SearchBox";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -36,6 +37,7 @@ const HeaderNavBar = () => {
         </Link>
       </div>
       <div className="flex-none">
+        <SearchBox />
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator">
