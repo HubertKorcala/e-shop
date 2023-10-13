@@ -28,6 +28,7 @@ import ProductList from "./pages/admin/ProductList.tsx";
 import ProductEdit from "./pages/admin/ProductEdit.tsx";
 import UserList from "./pages/admin/UserList.tsx";
 import UserEdit from "./pages/admin/UserEdit.tsx";
+import { ThemeProvider } from "@material-tailwind/react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -66,7 +67,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
-        <RouterProvider router={router} />
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
       </PayPalScriptProvider>
     </Provider>
   </React.StrictMode>
