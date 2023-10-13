@@ -5,6 +5,7 @@ import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import { ProductItem } from "../types/productType";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 const Home = () => {
   const { pageNumber, keyword } = useParams();
@@ -35,6 +36,9 @@ const Home = () => {
         <Loader />
       ) : (
         <>
+          <div className="mt-4 hidden 2xl:block">
+            <ProductCarousel />
+          </div>
           <div className="prose my-6 mx-auto">
             <h1>Latest Products</h1>
           </div>
