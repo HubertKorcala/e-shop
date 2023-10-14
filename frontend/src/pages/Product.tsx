@@ -12,6 +12,7 @@ import { addToCart } from "../slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { RootState } from "../store";
+import Meta from "../components/Meta";
 
 const Product = () => {
   const { id: productId } = useParams();
@@ -75,7 +76,7 @@ const Product = () => {
     <>
       <div className="mx-2 md:mx-0">
         <Link className="mx-2 md:mx-0" to="/">
-          <button className="btn w-24 mt-12 mb-6">Go back</button>
+          <button className="btn w-26 mt-12 mb-6">Go back</button>
         </Link>
       </div>
 
@@ -85,15 +86,13 @@ const Product = () => {
         <Loader />
       ) : (
         <>
+          <Meta title={productItem?.name} />
           <div className="md:flex gap-6 justify-between mb-4">
             <div className=" mx-3 md:mx-0">
               <img src={productItem?.image} alt="" />
             </div>
             <div className="flex flex-col basis-1/4">
-              <div
-                className="grid ml-6 prose mt-6 md:mt-0
-          "
-              >
+              <div className="grid ml-6 prose mt-6 md:mt-0">
                 <h2 className="text-left">{productItem?.name}</h2>
               </div>
               <div className="divider"></div>
@@ -163,7 +162,7 @@ const Product = () => {
                   <div className="chat-header flex">
                     {review.name}
                     <div className="ml-2 ">
-                      <Rating style="text-xs" value={review.rating} />
+                      <Rating value={review.rating} />
                     </div>
                   </div>
                   <div className="chat-bubble">{review.comment}</div>
