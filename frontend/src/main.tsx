@@ -29,6 +29,7 @@ import ProductEdit from "./pages/admin/ProductEdit.tsx";
 import UserList from "./pages/admin/UserList.tsx";
 import UserEdit from "./pages/admin/UserEdit.tsx";
 import { ThemeProvider } from "@material-tailwind/react";
+import { HelmetProvider } from "react-helmet-async";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -65,12 +66,14 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </PayPalScriptProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PayPalScriptProvider deferLoading={true} options={{ clientId: "" }}>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </PayPalScriptProvider>
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>
 );
