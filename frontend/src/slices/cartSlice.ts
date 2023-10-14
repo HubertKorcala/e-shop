@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CartItem, CartType } from "../utils/cartType";
+import { CartItem, CartType } from "../types/cartType";
 import { updateCart } from "../utils/cartUtils";
 
 const initialState: CartType = localStorage.getItem("cart")
@@ -28,7 +28,9 @@ const cartSlice = createSlice({
       updateCart(state);
     },
     removeFromCart: (state, action) => {
-      state.cartItems = state.cartItems.filter((x) => x._id !== action.payload);
+      state.cartItems = state.cartItems.filter(
+        (x: CartItem) => x._id !== action.payload
+      );
 
       return updateCart(state);
     },
@@ -47,6 +49,7 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
+    resetCart: (state) => (state = initialState),
   },
 });
 
@@ -56,6 +59,7 @@ export const {
   saveShippingAddress,
   savePaymentMethod,
   clearCartItems,
+  resetCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

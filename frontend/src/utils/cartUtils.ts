@@ -1,5 +1,5 @@
 import { WritableDraft } from "immer/dist/internal.js";
-import { CartItem, CartType } from "./cartType";
+import { CartItem, CartType } from "../types/cartType";
 
 export const addDecimals = (num: number) => {
   return (Math.round(num * 100) / 100).toFixed(2);

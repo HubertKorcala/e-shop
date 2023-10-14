@@ -9,6 +9,7 @@ import { useLogoutMutation } from "../slices/usersApiSlice";
 import { CartItem } from "../types/cartType";
 import { RiAdminLine } from "react-icons/ri";
 import SearchBox from "./SearchBox";
+import { resetCart } from "../slices/cartSlice";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -23,6 +24,7 @@ const HeaderNavBar = () => {
     try {
       await logoutApiCall("").unwrap();
       dispatch(logout());
+      dispatch(resetCart());
       navigate(`/login`);
     } catch (error) {
       console.log(error);
