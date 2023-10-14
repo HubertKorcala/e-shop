@@ -4,7 +4,7 @@ import Star from "../assets/icons/Star";
 
 const Rating: React.FC<{
   value: number;
-  text: string;
+  text?: string;
 }> = (props) => {
   return (
     <div className=" rating flex">

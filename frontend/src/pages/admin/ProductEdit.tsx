@@ -162,6 +162,7 @@ const ProductEdit = () => {
         <div className="prose mb-6">
           <h1 className="">Edit Product</h1>
         </div>
+        {loadingUpdate && <Loader />}
         {isLoading && <Loader />}
         <form>
           {product &&

@@ -9,7 +9,7 @@ const SearchBox = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (searchTerm.trim() !== "") {
-      navigate(`/search/${searchTerm}`);
+      navigate(`/search/${searchTerm.trim()}`);
     } else {
       navigate("/");
     }
