@@ -19,6 +19,8 @@ const ProductList = () => {
     pageNumber,
   });
 
+  const err: any = error;
+
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
 
@@ -84,9 +86,9 @@ const ProductList = () => {
             {loadingCreate && <Loader />}
             {loadingDelete && <Loader />}
             {isLoading && <Loader />}
-            {error && (
+            {err && (
               <>
-                <ErrorMessage message={String(error)} />
+                <ErrorMessage message={err.data.message} />
               </>
             )}
             {!isLoading &&

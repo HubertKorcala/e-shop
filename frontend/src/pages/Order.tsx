@@ -30,6 +30,8 @@ const Order = () => {
 
   const order: OrderType = data;
 
+  const err: any = error;
+
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -112,8 +114,8 @@ const Order = () => {
 
   return isLoading ? (
     <Loader />
-  ) : error ? (
-    <ErrorMessage />
+  ) : err ? (
+    <ErrorMessage message={err?.data?.message || err.message} />
   ) : (
     <div className="">
       <div className="flex w-full">

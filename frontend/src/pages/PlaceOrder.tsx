@@ -19,6 +19,8 @@ const PlaceOrder = () => {
 
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
 
+  const err: any = error;
+
   useEffect(() => {
     if (Object.values(cart.shippingAddress).includes("")) {
       navigate("/shipping");
@@ -132,9 +134,9 @@ const PlaceOrder = () => {
               <p className="card-title justify-end m-0">${cart.totalPrice}</p>
             </div>
             <div className="divider my-0"></div>
-            {error && (
+            {err && (
               <>
-                <ErrorMessage message={String(error)} />
+                <ErrorMessage message={err?.data?.message || err.message} />
                 <div className="divider my-0"></div>
               </>
             )}
