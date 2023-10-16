@@ -70,7 +70,7 @@ const Order = () => {
   function onApprove(data: any, actions: any) {
     return actions.order.capture().then(async function (details: any) {
       try {
-        await payOrder({ orderId, details });
+        await payOrder({ orderId, details }).unwrap();
         refetch();
         toast.success("Payment successful");
       } catch (err: any) {
