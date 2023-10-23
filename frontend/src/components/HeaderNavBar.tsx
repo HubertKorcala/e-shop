@@ -10,6 +10,7 @@ import { CartItem } from "../types/cartType";
 import { RiAdminLine } from "react-icons/ri";
 import SearchBox from "./SearchBox";
 import { resetCart } from "../slices/cartSlice";
+import logo from "../assets/images/e-shop-logo.png";
 
 const HeaderNavBar = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -34,8 +35,8 @@ const HeaderNavBar = () => {
   return (
     <header className="navbar bg-base-100 drop-shadow-lg rounded-box z-10">
       <div className="flex-1">
-        <Link to={`/`} className="btn btn-ghost normal-case text-xl">
-          E-shop
+        <Link to={`/`} className="">
+          <img src={logo} alt="E-shop logo" className="w-28 shrink-0" />
         </Link>
       </div>
       <div className="flex-none">
