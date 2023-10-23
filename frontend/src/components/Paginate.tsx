@@ -8,7 +8,7 @@ const Paginate: React.FC<{
 }> = ({ pages, page, isAdmin = false, keyword = "" }) => {
   return (
     pages > 1 && (
-      <div className="join">
+      <div className="join mb-4">
         {[...Array(pages).keys()].map((x) => (
           <Link
             key={x + 1}

@@ -120,7 +120,7 @@ const Order = () => {
     <div className="">
       <div className="flex w-full">
         <div className=" mx-auto prose">
-          <h1 className="whitespace-nowrap my-11">{`Order ${orderId}`}</h1>
+          <h1 className="text-xl md:text-3xl lg:text-4xl md:whitespace-nowrap my-11">{`Order ${orderId}`}</h1>
         </div>
       </div>
       <div className="flex justify-around flex-wrap">

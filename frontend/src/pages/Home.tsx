@@ -39,12 +39,12 @@ const Home = () => {
         <>
           <Meta />
           <div className="mt-4 hidden 2xl:block">
-            <ProductCarousel />
+            {/* <ProductCarousel /> */}
           </div>
           <div className="prose my-6 mx-auto">
-            <h1>Latest Products</h1>
+            <h1>Products</h1>
           </div>
-          <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
             {data.products.map((product: ProductItem) => (
               <Product key={product._id} product={product} />
             ))}

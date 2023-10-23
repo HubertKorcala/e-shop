@@ -16,13 +16,13 @@ const SearchBox = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className="hidden md:block">
       <div className="flex justify-center">
         <input
           type="text"
           value={searchTerm}
           placeholder="Search Products..."
-          className="input input-bordered w-full max-w-xs"
+          className="input input-bordered w-full max-w-xs "
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button type="submit" className="btn ml-2">
