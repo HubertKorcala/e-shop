@@ -4,6 +4,7 @@ import ErrorMessage from "../../components/Message/ErrorMessage";
 import { useGetAllOrdersQuery } from "../../slices/ordersApiSlice";
 import { OrderType } from "../../types/orderType";
 import { useNavigate } from "react-router-dom";
+import { getErrorMessage } from "../../utils/errorUtils";
 
 const OrderList = () => {
   const { data: orders, isLoading, error } = useGetAllOrdersQuery();
@@ -36,7 +37,7 @@ const OrderList = () => {
             {isLoading && <Loader />}
             {error && (
               <>
-                <ErrorMessage message={String(error)} />
+                <ErrorMessage message={getErrorMessage(error)} />
               </>
             )}
             {!isLoading &&
