@@ -61,6 +61,11 @@ const Product = () => {
 
   const reviewSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!comment) {
+      return toast.error("Comment cannot be empty");
+    }
+
     try {
       await addReview({ productId, rating, comment }).unwrap();
       refetch();
@@ -105,7 +110,7 @@ const Product = () => {
               <div className="divider"></div>
               <p className="ml-6">{`Price: $${productItem?.price}`}</p>
               <div className="divider"></div>
-              <p className="ml-6">{productItem?.description}</p>
+              <p className="ml-6 mr-2">{productItem?.description}</p>
             </div>
             <div className="card bg-base-100 shadow-xl h-min lg:basis-1/5  xl:basis-1/6">
               <div className="card-body">
