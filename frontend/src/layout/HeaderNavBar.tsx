@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import profilePicture from "../assets/images/profile-avatar.png";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "../components/ThemeToggle";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import { logout } from "../slices/authSlice";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { CartItem } from "../types/cartType";
 import { RiAdminLine } from "react-icons/ri";
-import SearchBox from "./SearchBox";
+import SearchBox from "../components/SearchBox";
 import { resetCart } from "../slices/cartSlice";
 import logo from "../assets/images/e-shop-logo.png";
 

@@ -34,8 +34,6 @@ const Profile = () => {
     error: ordersError,
   } = useGetMyOrdersQuery(userInfo?._id);
 
-  console.log(orders, loadingOrders, ordersError);
-
   useEffect(() => {
     if (userInfo) {
       setName(userInfo.name);
@@ -157,7 +155,7 @@ const Profile = () => {
                   <ErrorMessage message={String(ordersError)} />
                 </>
               )}
-              {orders && orders.length === 0 && <p>No orders</p>}
+              {orders && orders.length === 0 && <tr>No orders</tr>}
               {!loadingOrders &&
                 orders.map((order: OrderType, index: number) => (
                   <tr className="hover" key={index}>

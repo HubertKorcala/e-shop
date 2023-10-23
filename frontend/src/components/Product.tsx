@@ -1,4 +1,4 @@
-import { ProductItem } from "../utils/productType";
+import { ProductItem } from "../types/productType";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
