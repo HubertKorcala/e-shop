@@ -1,6 +1,5 @@
 import { apiSlice } from "./apiSlice";
 import { ORDERS_URL, PAYPAL_URL } from "../constants";
-import { OrderType } from "../types/orderType";
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

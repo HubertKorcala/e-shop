@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { getErrorMessage } from "../../utils/errorUtils";
 
 const OrderList = () => {
-  const { data: orders, isLoading, error } = useGetAllOrdersQuery();
+  const { data: orders, isLoading, error } = useGetAllOrdersQuery({});
 
   const navigate = useNavigate();
 

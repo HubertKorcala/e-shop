@@ -49,7 +49,10 @@ const cartSlice = createSlice({
 
       return updateCart(state);
     },
-    resetCart: (state) => (state = initialState),
+    resetCart: (state) => {
+      state = initialState;
+      return updateCart(state);
+    },
   },
 });
 

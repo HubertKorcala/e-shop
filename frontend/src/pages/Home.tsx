@@ -38,8 +38,8 @@ const Home = () => {
       ) : (
         <>
           <Meta />
-          <div className="mt-4 hidden 2xl:block">
-            {/* <ProductCarousel /> */}
+          <div className="mt-4 hidden">
+            <ProductCarousel />
           </div>
           <div className="prose my-6 mx-auto">
             <h1>Products</h1>

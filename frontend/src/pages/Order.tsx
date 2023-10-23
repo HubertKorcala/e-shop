@@ -8,7 +8,6 @@ import {
 import ErrorMessage from "../components/Message/ErrorMessage";
 import Loader from "../components/Loader";
 import { OrderType } from "../types/orderType";
-import SuccessMessage from "../components/Message/successMessage";
 import {
   PayPalButtons,
   SCRIPT_LOADING_STATE,
@@ -18,6 +17,7 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import SuccessMessage from "../components/Message/SuccessMessage";
 
 const Order = () => {
   const { id: orderId } = useParams();
@@ -36,7 +36,7 @@ const Order = () => {
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
-  const [deliverOrder, { isLoading: loadingDelive }] =
+  const [deliverOrder, { isLoading: loadingDeliver }] =
     useDeliverOrderMutation();
 
   const {
@@ -67,7 +67,7 @@ const Order = () => {
     }
   }, [order, paypal, paypalDispatch, loadingPayPal, errorPayPal]);
 
-  function onApprove(data: any, actions: any) {
+  function onApprove(_data: any, actions: any) {
     return actions.order.capture().then(async function (details: any) {
       try {
         await payOrder({ orderId, details }).unwrap();
@@ -86,7 +86,7 @@ const Order = () => {
   function onError(err: any) {
     toast.error(err.message);
   }
-  function createOrder(data: any, actions: any) {
+  function createOrder(_data: any, actions: any) {
     return actions.order
       .create({
         purchase_units: [
@@ -112,7 +112,7 @@ const Order = () => {
     }
   };
 
-  return isLoading ? (
+  return isLoading && loadingDeliver ? (
     <Loader />
   ) : err ? (
     <ErrorMessage message={err?.data?.message || err.message} />

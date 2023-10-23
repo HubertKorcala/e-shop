@@ -35,12 +35,14 @@ const PlaceOrder = () => {
         orderItems: cart.cartItems,
         shippingAddress: cart.shippingAddress,
         paymentMethod: cart.paymentMethod,
-        itemsPrice: cart.cartItems
-          .reduce((a: number, item: CartItem) => a + item.price * item.qty, 0)
-          .toFixed(2),
-        shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
-        totalPrice: cart.totalPrice,
+        itemsPrice: Number(
+          cart.cartItems
+            .reduce((a: number, item: CartItem) => a + item.price * item.qty, 0)
+            .toFixed(2)
+        ),
+        shippingPrice: Number(cart.shippingPrice),
+        taxPrice: Number(cart.taxPrice),
+        totalPrice: Number(cart.totalPrice),
       }).unwrap();
       dispanch(clearCartItems());
       navigate(`/order/${res._id}`);
