@@ -112,7 +112,7 @@ const Order = () => {
     }
   };
 
-  return isLoading && loadingDeliver ? (
+  return isLoading ? (
     <Loader />
   ) : err ? (
     <ErrorMessage message={err?.data?.message || err.message} />
@@ -245,6 +245,9 @@ const Order = () => {
                 </div>
               </>
             )}
+
+            {loadingDeliver && <Loader />}
+
             {userInfo &&
               userInfo.isAdmin &&
               order.isPaid &&
